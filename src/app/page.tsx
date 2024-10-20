@@ -1,12 +1,11 @@
 import Header from '@/components/header';
-import Image from 'next/image';
-import Login from './pages/login/page';
+import Login from './login/index';
 
 export default function Home() {
   return (
-    <section>
-      <Header></Header>
-      <Login></Login>
-    </section>
+      <section>
+        <Header></Header>
+        <Login></Login>
+      </section>
   );
 }
