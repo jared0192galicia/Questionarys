@@ -13,6 +13,7 @@ export default function Questionnarie() {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    document.title = `Cuestionarios - ${id}`;
     setTimeout(() => {
       setLoading(false);
     }, 10_000);

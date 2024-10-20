@@ -2,10 +2,9 @@
 import { Password } from 'primereact/password';
 import {Button } from 'primereact/button';
 import cn from '@/utils/cn';
-import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { FloatLabel } from 'primereact/floatlabel';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface Account {
@@ -22,10 +21,9 @@ export default function Login() {
   const [password, setPassword] = useState<string>('');
   const [form, setForm] = useState<Account>({});
   const [loadingLogin, setLoadingLogin] = useState<boolean>(false);
-  const [loadingPost, setLoadingPost] = useState<boolean>(false);
+  const [loadingPost] = useState<boolean>(false);
 
   const router = useRouter();
-
 
   const handleChange = (key: string, value: string) => {
     setForm((prevForm) => ({ ...prevForm, [key]: value }));
