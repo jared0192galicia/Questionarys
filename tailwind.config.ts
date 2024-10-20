@@ -1,24 +1,3 @@
-// import type { Config } from "tailwindcss";
-
-// const config: Config = {
-//   content: [
-//     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-//     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-//     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-//   ],
-//   theme: {
-//     extend: {
-//       colors: {
-//         background: 'var(--background)',
-//         foreground: 'var(--foreground)',
-//       },
-//     },
-//   },
-//   plugins: [],
-// };
-// export default config;
-
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
@@ -30,15 +9,7 @@ module.exports = {
         notoLight: ['font-notoLight', 'NotoSansLight']
       },
       colors: {
-        'dirty-white': '#F5F8FB',
-        'preslow-gray': '#012957',
-        'preslow-blue': '#002c55',
-        'preslow-light-gray': '#c5c5c5',
-        'preslow-dark-gray': '#404553',
-        'preslow-soft-gray': '#f3f9ff',
-        'preslow-dark-cyan': '#357A8B',
-        'preslow-medium-cyan': '#4BACC6',
-        'preslow-light-cyan': '#A1D8E4'
+        'dirty-white': '#F5F8FB'
       },
       height: {
         'panel': 'calc(100vh - 135px)' // Definir el cálculo personalizado
