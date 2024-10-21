@@ -7,6 +7,7 @@ const data = {
   fecha_creacion: '2024-10-18',
   fecha_limite: '2024-11-01',
   image: '/usercard.png',
+  public: true,
   questions: [
     {
       type: 'multiple_choice',
@@ -18,38 +19,47 @@ const data = {
         'Insatisfecho',
         'Muy insatisfecho'
       ],
-      max: 10,
-      min: 1
+      response: ['Neutral'],
+      min: 1,
+      max: 3,
+      required: false
     },
     {
       type: 'true_false',
       question: '¿Recomendarías nuestro servicio a un amigo?',
-      response: true
+      response: true,
+      required: true
     },
     {
       type: 'short_answer',
       question: '¿Qué mejorarías en nuestro servicio?',
-      response: ''
+      response: 'Nada',
+      required: true
     },
     {
       type: 'long_answer',
       question: 'Por favor, proporciona comentarios adicionales:',
-      response: ''
+      required: false
     },
     {
       type: 'multiple_choice',
       question: '¿Cuál es tu producto favorito?',
-      options: ['Producto A', 'Producto B', 'Producto C', 'Producto D']
+      options: ['Producto A', 'Producto B', 'Producto C', 'Producto D'],
+      response: 'Producto A',
+      required: false
     },
     {
       type: 'short_answer',
       question: '¿Cuál es tu nombre?',
-      response: ''
+      response: 'Jared',
+      required: true
     },
     {
       type: 'multiple_choice',
       question: '¿Cómo nos conociste?',
-      options: ['Publicidad', 'Recomendación', 'Redes Sociales', 'Otro']
+      options: ['Publicidad', 'Recomendación', 'Redes Sociales', 'Otro'],
+      response: 'Otro',
+      required: false
     }
   ],
   agradecimiento: '¡Gracias por tu tiempo y tus responses!'

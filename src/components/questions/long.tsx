@@ -7,6 +7,7 @@ interface ShortAnswerQuestionProps {
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   invalid?: boolean;
   required?: boolean;
+  answer?: string;
 }
 
 export default function LongAnswerQuestion({
@@ -14,7 +15,8 @@ export default function LongAnswerQuestion({
   value,
   onChange,
   invalid = false,
-  required = false
+  required = false,
+  answer
 }: ShortAnswerQuestionProps) {
   return (
     <div className='mb-4'>
@@ -28,7 +30,7 @@ export default function LongAnswerQuestion({
         rows={5}
         cols={30}
         invalid={invalid}
-        value={value}
+        value={answer != null? answer : value}
         onChange={onChange}
         placeholder='Escribe tu respuesta'
         className='w-full max-w-screen-sm md:max-w-[450px]'

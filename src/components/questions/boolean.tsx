@@ -1,40 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { Checkbox } from 'primereact/checkbox';
 
-interface MultipleChoiceQuestionProps {
+interface BooleanQuestionProps {
   question: string;
-  correctAnswers?: boolean;
-  onChange: (selected: string[]) => void;
+  correctAnswer?: boolean;
+  onChange: (selected: boolean) => void;
   invalid?: boolean;
   required?: boolean;
 }
 
 export default function BooleanQuestion({
   question,
-  correctAnswers,
+  correctAnswer,
   onChange,
   invalid = false,
   required = false
-}: MultipleChoiceQuestionProps) {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+}: BooleanQuestionProps) {
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const options = ['Verdadero', 'Falso'];
 
   useEffect(() => {
-    if (correctAnswers) {
+    if (correctAnswer != null) {
+      setSelectedOption(correctAnswer ? 'Verdadero' : 'Falso');
     }
   }, []);
 
   const handleOptionChange = (option: string) => {
-    let updatedSelectedOptions = [...selectedOptions];
-
-    if (selectedOptions.includes(option)) {
-      updatedSelectedOptions = updatedSelectedOptions.filter(
-        (item) => item !== option
-      );
-    }
-
-    setSelectedOptions(updatedSelectedOptions);
-    onChange(updatedSelectedOptions);
+    const newSelectedOption = selectedOption === option ? null : option;
+    setSelectedOption(newSelectedOption);
+    onChange(newSelectedOption === 'Verdadero');
   };
 
   return (
@@ -52,8 +46,8 @@ export default function BooleanQuestion({
               inputId={`option-${index}`}
               value={option}
               onChange={() => handleOptionChange(option)}
-              checked={selectedOptions.includes(option)}
-              invalid={invalid}
+              checked={selectedOption === option}
+              className={invalid ? 'p-invalid' : ''}
             />
             <label htmlFor={`option-${index}`} className='ml-2'>
               {option}
@@ -61,6 +55,9 @@ export default function BooleanQuestion({
           </div>
         ))}
       </div>
+      {invalid && (
+        <p className='text-red-700 text-sm'>Por favor selecciona una opción.</p>
+      )}
     </div>
   );
 }

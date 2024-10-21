@@ -1,7 +1,7 @@
 'use client';
 import Header from '@/components/header';
 import cn from '@/utils/cn';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import data from '@/models/dommy/encuesta';
 import SkeletonCard from '@/components/skeleton/card';
 import React, { useEffect, useState } from 'react';
@@ -18,6 +18,8 @@ import { Ripple } from 'primereact/ripple';
 export default function Questionnarie() {
   const { id } = useParams(); // Captura el slug desde la URL
   const [loading, setLoading] = useState<boolean>(true);
+  const [finished, setFinished] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     document.title = `Cuestionarios - ${id}`;
@@ -25,48 +27,6 @@ export default function Questionnarie() {
       setLoading(false);
     }, 3_000);
   }, []);
-
-  const getQuestion = (question: any) => {
-    switch (question.type) {
-      case QuestionTypes.LONG_ANSWER:
-        return (
-          <LongAnswerQuestion
-            onChange={() => {}}
-            question={question.question}
-            value=''
-          ></LongAnswerQuestion>
-        );
-      case QuestionTypes.MULTIPLE_CHOICE:
-        return (
-          <MultipleChoiceQuestion
-            maxSelections={question.max}
-            minSelections={question.min}
-            onChange={() => {}}
-            options={question.options}
-            question={question.question}
-          ></MultipleChoiceQuestion>
-        );
-      case QuestionTypes.SHORT_ANSWER:
-        return (
-          <ShortAnswerQuestion
-            onChange={() => {}}
-            question={question.question}
-            value=''
-          ></ShortAnswerQuestion>
-        );
-
-      case QuestionTypes.TRUE_FALSE:
-        return (
-          <BooleanQuestion
-            onChange={() => {}}
-            question={question.question}
-          ></BooleanQuestion>
-        );
-      default:
-        break;
-    }
-    return <>Tipo no reconocido</>;
-  };
 
   return (
     <>
@@ -89,36 +49,44 @@ export default function Questionnarie() {
           )}
         </section>
         <div className='my-5'></div>
-        <section
-          className={cn('font-jaldi bg-white px-5 pb-10 md:pl-24 rounded-lg')}
-        >
-          {loading ? (
-            <SkeletonQuestionary></SkeletonQuestionary>
-          ) : (
-            <>
-              <h2 className='text-2xl pt-4'>Preguntas</h2>
-              {data.questions.map((question, index) => (
-                <React.Fragment key={index}>{getQuestion(question)}</React.Fragment>
-              ))}
-            </>
-          )}
-        </section>
+
+        {finished ? (
+          <FinishQuestionary qualification={60} data={data}></FinishQuestionary>
+        ) : (
+          <section
+            className={cn('font-jaldi bg-white px-5 pb-10 md:pl-24 rounded-lg')}
+          >
+            {loading ? (
+              <SkeletonQuestionary></SkeletonQuestionary>
+            ) : (
+              <>
+                <h2 className='text-2xl pt-4'>Preguntas</h2>
+                {data.questions.map((question, index) => (
+                  <React.Fragment key={index}>
+                    {getQuestion(question)}
+                  </React.Fragment>
+                ))}
+              </>
+            )}
+          </section>
+        )}
         <div className='py-5'></div>
         <div className='flex pb-10 justify-center'>
           <Button
-            label={'Finalizar Cuestionario'}
+            label={finished ? 'Finalizar Revición' : 'Finalizar Cuestionario'}
             className='bg-cyan-800 md:w-1/3'
+            onClick={() => {
+              finished ? router.push('/home') : setFinished(true);
+            }}
           ></Button>
           <Ripple />
         </div>
-      <FinishQuestionary qualification={60}></FinishQuestionary>
       </section>
-
     </>
   );
 }
 
-function FinishQuestionary({qualification}: any) {
+function FinishQuestionary({ qualification, data }: any) {
   return (
     <section
       className={cn(
@@ -136,7 +104,68 @@ function FinishQuestionary({qualification}: any) {
       />
       <h3 className='text-2xl'>De aciertos</h3>
       <h3>Tu calificación es {qualification / 10}</h3>
-
+      <div className='w-3/4 border border-solid border-gray-200'></div>
+      <h3 className='text-left w-3/4'>Respuestas</h3>
+      <div className='w-5/6 md:w-3/4'>
+        {data.questions.map((question: any, index: number) => (
+          <React.Fragment key={index}>
+            {getQuestion(question, true)}
+          </React.Fragment>
+        ))}
+      </div>
     </section>
   );
 }
+
+const getQuestion = (question: any, answered: boolean = false) => {
+  const response = answered ? question.response : null;
+  // console.log(question.question, response)
+
+  switch (question.type) {
+    case QuestionTypes.LONG_ANSWER:
+      return (
+        <LongAnswerQuestion
+          onChange={() => {}}
+          question={question.question}
+          value=''
+          required={question.required}
+          answer={response != null ? 'Por reponder' : response}
+        ></LongAnswerQuestion>
+      );
+    case QuestionTypes.MULTIPLE_CHOICE:
+      return (
+        <MultipleChoiceQuestion
+          maxSelections={question.max}
+          minSelections={question.min}
+          onChange={() => {}}
+          required={question.required}
+          options={question.options}
+          question={question.question}
+          correctAnswers={response}
+        ></MultipleChoiceQuestion>
+      );
+    case QuestionTypes.SHORT_ANSWER:
+      return (
+        <ShortAnswerQuestion
+          onChange={() => {}}
+          question={question.question}
+          value=''
+          required={question.required}
+          answer={response}
+        ></ShortAnswerQuestion>
+      );
+
+    case QuestionTypes.TRUE_FALSE:
+      return (
+        <BooleanQuestion
+          onChange={() => {}}
+          question={question.question}
+          required={question.required}
+          correctAnswer={response}
+        ></BooleanQuestion>
+      );
+    default:
+      break;
+  }
+  return <>Tipo no reconocido</>;
+};

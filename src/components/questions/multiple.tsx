@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Checkbox } from 'primereact/checkbox';
 
 interface MultipleChoiceQuestionProps {
@@ -10,18 +10,27 @@ interface MultipleChoiceQuestionProps {
   onChange: (selected: string[]) => void;
   invalid?: boolean;
   required?: boolean;
+
 }
 
 export default function MultipleChoiceQuestion({
   question,
   options,
   maxSelections,
+  correctAnswers,
   minSelections,
   onChange,
   invalid = false,
   required = false
 }: MultipleChoiceQuestionProps) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
+  
+  useEffect(() => {
+    if (correctAnswers != null) {
+      setSelectedOptions(correctAnswers);
+    }
+  }, []);
 
   const handleOptionChange = (option: string) => {
     let updatedSelectedOptions = [...selectedOptions];
@@ -64,11 +73,11 @@ export default function MultipleChoiceQuestion({
           </div>
         ))}
       </div>
-      {/* {isInvalid && ( */}
+      {minSelections && (
         <p className='text-cyan-700 text-sm'>
           Selecciona entre {minSelections} y {maxSelections} opciones.
         </p>
-      {/* )} */}
+      )} 
     </div>
   );
 }
