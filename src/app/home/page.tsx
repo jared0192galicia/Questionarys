@@ -28,6 +28,7 @@ export default function Home() {
         <QuestionnarieCard></QuestionnarieCard>
         <QuestionnarieCard></QuestionnarieCard>
       </section>
+      <div className='my-8'></div>
     </>
   );
 }
@@ -35,12 +36,7 @@ export default function Home() {
 function QuestionnarieCard() {
   const router = useRouter();
 
-  const header = (
-    <img
-      alt='Card'
-      src='https://primefaces.org/cdn/primereact/images/usercard.png'
-    />
-  );
+  const header = <img alt='Card' src='/usercard.png' />;
   const footer = (
     <>
       <Button
@@ -64,7 +60,7 @@ function QuestionnarieCard() {
       className={cn(
         'card rounded-md',
         'flex justify-content-center',
-        'w-3/12 w[calc(33%-30px)] shadow-md',
+        'w-11/12 sm:w-1/2 md:w-1/3 lg:w-3/12 max-w-[346px] w[calc(33%-30px)] shadow-md',
         'hover:border-solid border-cyan-500 hover:border'
       )}
     >

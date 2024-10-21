@@ -1,6 +1,6 @@
 'use client';
 import { Password } from 'primereact/password';
-import {Button } from 'primereact/button';
+import { Button } from 'primereact/button';
 import cn from '@/utils/cn';
 import { InputText } from 'primereact/inputtext';
 import { FloatLabel } from 'primereact/floatlabel';
@@ -32,54 +32,54 @@ export default function Login() {
   return (
     <section
       className={cn(
-        'w-screen h-[calc(100vh-135px)]',
+        'w-screen md:h-[calc(100vh-135px)]',
         'bg-dirty-white font-jaldi font-light',
-        'flex justify-center items-center gap-10'
+        'flex justify-center items-center gap-10 flex-col md:flex-row'
       )}
     >
       <section
         className={cn(
-          'w-72 h-96 rounded-lg bg-white',
+          'w-screen h-auto pb-10 md:pb-0 md:w-72 md:h-96 rounded-lg bg-white',
           'flex flex-col items-center'
         )}
       >
-        <h2 className="w-10/12 font-jaldi">Iniciar sesion</h2>
-        <div className="h-7"></div>
-        <FloatLabel className="font-jaldi">
+        <h2 className='w-10/12 font-jaldi'>Iniciar sesion</h2>
+        <div className='h-7'></div>
+        <FloatLabel className='font-jaldi'>
           <InputText
-            id="username"
+            id='username'
             value={user}
             onChange={(e) => setUser(e.target.value)}
           />
-          <label htmlFor="username">Usuario</label>
+          <label htmlFor='username'>Usuario</label>
         </FloatLabel>
 
-        <div className="h-7"></div>
+        <div className='h-7'></div>
 
-        <FloatLabel className="font-jaldi">
+        <FloatLabel className='font-jaldi'>
           <Password
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             toggleMask
             feedback={false}
-            inputClassName="w-[247px]"
+            inputClassName='w-[247px]'
           />
 
-          <label htmlFor="username">Contraseña</label>
+          <label htmlFor='username'>Contraseña</label>
         </FloatLabel>
         <p
           className={cn(
-            'text-xs m-0 text-right w-10/12 mt-1',
+            'text-xs m-0 text-right w-64 md:w-10/12 mt-1',
             'cursor-pointer hover:text-cyan-800'
           )}
         >
           Olvidaste tu Contraseña?
         </p>
-        <div className="my-7"></div>
+        <div className='my-7'></div>
         <Button
-          label="Ingresar"
+          label='Ingresar'
           className={cn(
-            'w-10/12 bg-white text-gray-800 h-10',
+            'w-64 md:w-10/12 bg-white text-gray-800 h-10',
             'border border-solid border-cyan-800',
             'rounded-md text-lg cursor-pointer',
             'hover:bg-cyan-900 hover:text-white',
@@ -88,79 +88,79 @@ export default function Login() {
           loading={loadingLogin}
           onClick={() => {
             setLoadingLogin(true);
-            setTimeout(()=> router.push('/home'),5_000);
+            setTimeout(() => router.push('/home'), 5_000);
           }}
         />
       </section>
-      <div className="h-1/2 border border-solid border-gray-200"></div>
+      <div className='h-1/2 w-3/4 md:w-0 border border-solid border-gray-200'></div>
       <section
         className={cn(
-          'w-[500px] h-96 rounded-lg bg-white',
+          'w-screen md:w-[500px] pb-10 md:pb-0 md:h-96 rounded-lg bg-white',
           'flex flex-col items-center'
         )}
       >
-        <h2 className="w-10/12 font-jaldi">Crear una cuenta</h2>
-        <div className="h-7"></div>
-        <div className="flex flex-wrap justify-center gap-x-5 gap-y-6">
+        <h2 className='w-10/12 font-jaldi'>Crear una cuenta</h2>
+        <div className='h-7'></div>
+        <div className='flex flex-wrap justify-center gap-x-5 gap-y-6'>
           <FloatLabel>
             <InputText
-              id="firts-name"
+              id='firts-name'
               value={form.firstName}
-              className="w-[210px]"
+              className='w-full md:w-[210px]'
               onChange={(e) => handleChange('', e.target.value)}
             />
-            <label htmlFor="firts-name">Primer Nombre</label>
+            <label htmlFor='firts-name'>Primer Nombre</label>
           </FloatLabel>
           <FloatLabel>
             <InputText
-              id="second-name"
+              id='second-name'
               value={form.secondName}
-              className="w-[210px]"
+              className='w-full md:w-[210px]'
               onChange={(e) => handleChange('secondName', e.target.value)}
             />
-            <label htmlFor="second-name">Segundo Nombre</label>
+            <label htmlFor='second-name'>Segundo Nombre</label>
           </FloatLabel>
           <FloatLabel>
             <InputText
-              id="last-name"
+              id='last-name'
               value={form.lastName}
-              className="w-[210px]"
+              className='w-full md:w-[210px]'
               onChange={(e) => handleChange('lastName', e.target.value)}
             />
-            <label htmlFor="last-name">Apellido Paterno</label>
+            <label htmlFor='last-name'>Apellido Paterno</label>
           </FloatLabel>
           <FloatLabel>
             <InputText
-              id="lastname"
+              id='lastname'
               value={form.lastNameMother}
-              className="w-[210px]"
+              className='w-full md:w-[210px]'
               onChange={(e) => handleChange('lastNameMother', e.target.value)}
             />
-            <label htmlFor="lastname">Apellido Materno</label>
+            <label htmlFor='lastname'>Apellido Materno</label>
           </FloatLabel>
           <FloatLabel>
             <InputText
-              id="email"
+              id='email'
               value={form.email}
-              className="w-[210px]"
+              className='w-full md:w-[210px]'
               onChange={(e) => handleChange('email', e.target.value)}
             />
-            <label htmlFor="email">Correo</label>
+            <label htmlFor='email'>Correo</label>
           </FloatLabel>
           <FloatLabel>
             <Password
-              name="enter-password"
+              name='enter-password'
               value={form.password}
-              inputClassName="w-[210px]"
+              inputClassName='w-[248px] md:w-[210px]'
               onChange={(e) => handleChange('password', e.target.value)}
               toggleMask
             />
-            <label htmlFor="enter-password">Contraseña</label>
+            <label htmlFor='enter-password'>Contraseña</label>
           </FloatLabel>
         </div>
-        <div className="my-2"></div>
+        <div className='my-5 md:my-2'></div>
         <Button
-          label="Crear Cuenta"
+          label='Crear Cuenta'
           loading={loadingPost}
           className={cn(
             'w-10/12 bg-white text-gray-900 h-10',
@@ -170,6 +170,7 @@ export default function Login() {
           )}
         />
       </section>
+      <div className='my-5 md:m-0'></div>
     </section>
   );
 }

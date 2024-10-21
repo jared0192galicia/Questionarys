@@ -19,7 +19,7 @@ export default function ShortAnswerQuestion({
         value={value}
         onChange={onChange}
         placeholder='Escribe tu respuesta'
-        className='w-full'
+        className='w-full max-w-[250px]'
       />
     </div>
   );

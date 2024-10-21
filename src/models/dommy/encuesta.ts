@@ -7,50 +7,52 @@ const data = {
   fecha_creacion: '2024-10-18',
   fecha_limite: '2024-11-01',
   image: '/usercard.png',
-  preguntas: [
+  questions: [
     {
-      tipo: 'multiple_choice',
-      pregunta: '¿Qué tan satisfecho estás con nuestro servicio?',
-      opciones: [
+      type: 'multiple_choice',
+      question: '¿Qué tan satisfecho estás con nuestro servicio?',
+      options: [
         'Muy satisfecho',
         'Satisfecho',
         'Neutral',
         'Insatisfecho',
         'Muy insatisfecho'
-      ]
+      ],
+      max: 10,
+      min: 1
     },
     {
-      tipo: 'true_false',
-      pregunta: '¿Recomendarías nuestro servicio a un amigo?',
-      opciones: ['Verdadero', 'Falso']
+      type: 'true_false',
+      question: '¿Recomendarías nuestro servicio a un amigo?',
+      response: true
     },
     {
-      tipo: 'short_answer',
-      pregunta: '¿Qué mejorarías en nuestro servicio?',
-      respuesta: ''
+      type: 'short_answer',
+      question: '¿Qué mejorarías en nuestro servicio?',
+      response: ''
     },
     {
-      tipo: 'long_answer',
-      pregunta: 'Por favor, proporciona comentarios adicionales:',
-      respuesta: ''
+      type: 'long_answer',
+      question: 'Por favor, proporciona comentarios adicionales:',
+      response: ''
     },
     {
-      tipo: 'multiple_choice',
-      pregunta: '¿Cuál es tu producto favorito?',
-      opciones: ['Producto A', 'Producto B', 'Producto C', 'Producto D']
+      type: 'multiple_choice',
+      question: '¿Cuál es tu producto favorito?',
+      options: ['Producto A', 'Producto B', 'Producto C', 'Producto D']
     },
     {
-      tipo: 'short_answer',
-      pregunta: '¿Cuál es tu nombre?',
-      respuesta: ''
+      type: 'short_answer',
+      question: '¿Cuál es tu nombre?',
+      response: ''
     },
     {
-      tipo: 'multiple_choice',
-      pregunta: '¿Cómo nos conociste?',
-      opciones: ['Publicidad', 'Recomendación', 'Redes Sociales', 'Otro']
+      type: 'multiple_choice',
+      question: '¿Cómo nos conociste?',
+      options: ['Publicidad', 'Recomendación', 'Redes Sociales', 'Otro']
     }
   ],
-  agradecimiento: '¡Gracias por tu tiempo y tus respuestas!'
+  agradecimiento: '¡Gracias por tu tiempo y tus responses!'
 };
 
 export default data;
