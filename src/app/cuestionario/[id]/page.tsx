@@ -98,7 +98,7 @@ export default function Questionnarie() {
             <>
               <h2 className='text-2xl pt-4'>Preguntas</h2>
               {data.questions.map((question, index) => (
-                <React.Fragment>{getQuestion(question)}</React.Fragment>
+                <React.Fragment key={index}>{getQuestion(question)}</React.Fragment>
               ))}
             </>
           )}

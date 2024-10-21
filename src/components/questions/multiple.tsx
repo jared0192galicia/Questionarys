@@ -15,7 +15,6 @@ interface MultipleChoiceQuestionProps {
 export default function MultipleChoiceQuestion({
   question,
   options,
-  correctAnswers,
   maxSelections,
   minSelections,
   onChange,
@@ -41,11 +40,6 @@ export default function MultipleChoiceQuestion({
     onChange(updatedSelectedOptions);
   };
 
-  const isInvalid =
-    invalid ||
-    selectedOptions.length < minSelections ||
-    selectedOptions.length > maxSelections;
-
   return (
     <div className='mb-4'>
       <label className='block mb-2 font-semibold'>
@@ -62,6 +56,7 @@ export default function MultipleChoiceQuestion({
               value={option}
               onChange={() => handleOptionChange(option)}
               checked={selectedOptions.includes(option)}
+              invalid={invalid}
             />
             <label htmlFor={`option-${index}`} className='ml-2'>
               {option}

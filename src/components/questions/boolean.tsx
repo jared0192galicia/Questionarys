@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Checkbox } from 'primereact/checkbox';
 
 interface MultipleChoiceQuestionProps {
@@ -18,6 +18,11 @@ export default function BooleanQuestion({
 }: MultipleChoiceQuestionProps) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const options = ['Verdadero', 'Falso'];
+
+  useEffect(() => {
+    if (correctAnswers) {
+    }
+  }, []);
 
   const handleOptionChange = (option: string) => {
     let updatedSelectedOptions = [...selectedOptions];
@@ -48,6 +53,7 @@ export default function BooleanQuestion({
               value={option}
               onChange={() => handleOptionChange(option)}
               checked={selectedOptions.includes(option)}
+              invalid={invalid}
             />
             <label htmlFor={`option-${index}`} className='ml-2'>
               {option}
