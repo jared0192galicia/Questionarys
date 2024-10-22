@@ -42,9 +42,9 @@ export default function Questionnarie() {
             <SkeletonCard></SkeletonCard>
           ) : (
             <>
-              <h1 className='text-xl md:text-3xl pt-7'>{data.titulo}</h1>
+              <h1 className='text-xl md:text-3xl pt-7'>{data.title}</h1>
               <img src={data.image} alt='' className='w-52 mr-2 bg-gray-200' />
-              <span>{data.descripcion}</span>{' '}
+              <span>{data.description}</span>{' '}
             </>
           )}
         </section>

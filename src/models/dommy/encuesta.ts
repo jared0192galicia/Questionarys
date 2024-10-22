@@ -1,11 +1,11 @@
 const data = {
   id: 'encuesta-12345',
-  titulo: 'Encuesta de Satisfacción del Usuario',
-  descripcion:
+  title: 'Encuesta de Satisfacción del Usuario',
+  description:
     'Esta encuesta tiene como objetivo recopilar información sobre la experiencia del usuario en nuestra plataforma. Por favor, responde con sinceridad. Esta encuesta tiene como objetivo recopilar información sobre la experiencia del usuario en nuestra plataforma. Por favor, responde con sinceridad.Esta encuesta tiene como objetivo recopilar información sobre la experiencia del usuario en nuestra plataforma. Por favor, responde con sinceridad.Esta encuesta tiene como objetivo recopilar información sobre la experiencia del usuario en nuestra plataforma. Por favor, responde con sinceridad.',
-  creador: 'Equipo de Experiencia de Usuario',
-  fecha_creacion: '2024-10-18',
-  fecha_limite: '2024-11-01',
+  author: 'Equipo de Experiencia de Usuario',
+  created: '2024-10-18',
+  limitDate: '2024-11-01',
   image: '/usercard.png',
   public: true,
   questions: [

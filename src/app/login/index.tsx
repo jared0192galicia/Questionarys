@@ -8,6 +8,7 @@ import { useRef, useState } from 'react';
 import { Toast } from 'primereact/toast';
 import { useRouter } from 'next/navigation';
 import UIMessages from '@/models/messages';
+import ForgotPassword from '@/components/forgotPassword';
 
 interface Account {
   firstName?: string;
@@ -24,6 +25,7 @@ export default function Login() {
   const [form, setForm] = useState<Account>({});
   const [loadingLogin, setLoadingLogin] = useState<boolean>(false);
   const [loadingPost] = useState<boolean>(false);
+  const [showForgotPassword, setForgotPassword] = useState<boolean>(true);
 
   const toast = useRef<Toast>(null);
   const router = useRouter();
@@ -56,11 +58,12 @@ export default function Login() {
   return (
     <>
       <Toast ref={toast} />
+      {showForgotPassword && <ForgotPassword setVisible={setForgotPassword}/>}
       <section
         className={cn(
           'w-screen md:h-[calc(100vh-135px)]',
           'bg-dirty-white font-jaldi font-light',
-          'flex justify-center items-center gap-10 flex-col md:flex-row'
+          'flex justify-center items-center gap-10 flex-col md:flex-row', {'blur-sm': showForgotPassword}
         )}
       >
         <section
@@ -96,8 +99,9 @@ export default function Login() {
           <p
             className={cn(
               'text-xs m-0 text-right w-64 md:w-10/12 mt-1',
-              'cursor-pointer hover:text-cyan-800'
+              'cursor-pointer hover:text-cyan-800 select-none '
             )}
+            onClick={() => setForgotPassword((prev) => !prev)}
           >
             Olvidaste tu Contraseña?
           </p>
