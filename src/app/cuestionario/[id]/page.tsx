@@ -14,11 +14,18 @@ import { QuestionTypes } from '@/models/constants';
 import { Knob } from 'primereact/knob';
 import { Button } from 'primereact/button';
 import { Ripple } from 'primereact/ripple';
+import ProgressQuestion from '@/components/progressQuestion';
+
+interface QuestionResponse {
+  id?: number;
+  responded?: boolean;
+}
 
 export default function Questionnarie() {
   const { id } = useParams(); // Captura el slug desde la URL
   const [loading, setLoading] = useState<boolean>(true);
   const [finished, setFinished] = useState<boolean>(false);
+  const [lastResponse, setLastResponse] = useState<QuestionResponse>({});
   const router = useRouter();
 
   useEffect(() => {
@@ -27,6 +34,75 @@ export default function Questionnarie() {
       setLoading(false);
     }, 3_000);
   }, []);
+
+  const getQuestion = (
+    question: any,
+    index: number,
+    answered: boolean = false
+  ) => {
+    const response = answered ? question.response : null;
+    // console.log(question.question, response)
+
+    switch (question.type) {
+      case QuestionTypes.LONG_ANSWER:
+        return (
+          <LongAnswerQuestion
+            onChange={() => {
+              setLastResponse({ id: index, responded: true });
+            }}
+            question={question.question}
+            value=''
+            required={question.required}
+            answer={response != null ? 'Por reponder' : response}
+          ></LongAnswerQuestion>
+        );
+      case QuestionTypes.MULTIPLE_CHOICE:
+        return (
+          <MultipleChoiceQuestion
+            maxSelections={question.max}
+            minSelections={question.min}
+            onChange={() => {
+              setLastResponse({ id: index, responded: true });
+            }}
+            required={question.required}
+            options={question.options}
+            question={question.question}
+            correctAnswers={response}
+          ></MultipleChoiceQuestion>
+        );
+      case QuestionTypes.SHORT_ANSWER:
+        return (
+          <ShortAnswerQuestion
+            onChange={() => {
+              setLastResponse({ id: index, responded: true });
+            }}
+            question={question.question}
+            value=''
+            required={question.required}
+            answer={response}
+          ></ShortAnswerQuestion>
+        );
+
+      case QuestionTypes.TRUE_FALSE:
+        return (
+          <BooleanQuestion
+            onChange={() => {
+              setLastResponse({ id: index, responded: true });
+            }}
+            question={question.question}
+            required={question.required}
+            correctAnswer={response}
+          ></BooleanQuestion>
+        );
+      default:
+        break;
+    }
+    return <>Tipo no reconocido</>;
+  };
+
+  // const handleResponse = (index, ) => {
+
+  // }
 
   return (
     <>
@@ -51,7 +127,11 @@ export default function Questionnarie() {
         <div className='my-5'></div>
 
         {finished ? (
-          <FinishQuestionary qualification={60} data={data}></FinishQuestionary>
+          <FinishQuestionary
+            qualification={60}
+            data={data}
+            getQuestion={getQuestion}
+          ></FinishQuestionary>
         ) : (
           <section
             className={cn('font-jaldi bg-white px-5 pb-10 md:pl-24 rounded-lg')}
@@ -59,14 +139,20 @@ export default function Questionnarie() {
             {loading ? (
               <SkeletonQuestionary></SkeletonQuestionary>
             ) : (
-              <>
-                <h2 className='text-2xl pt-4'>Preguntas</h2>
-                {data.questions.map((question, index) => (
-                  <React.Fragment key={index}>
-                    {getQuestion(question)}
-                  </React.Fragment>
-                ))}
-              </>
+              <div className='flex justify-between'>
+                <div>
+                  <h2 className='text-2xl pt-4'>Preguntas</h2>
+                  {data.questions.map((question, index) => (
+                    <React.Fragment key={index}>
+                      {getQuestion(question, index)}
+                    </React.Fragment>
+                  ))}
+                </div>
+                <ProgressQuestion
+                  total={data.questions.length}
+                  response={lastResponse}
+                ></ProgressQuestion>
+              </div>
             )}
           </section>
         )}
@@ -76,6 +162,7 @@ export default function Questionnarie() {
             label={finished ? 'Finalizar Revición' : 'Finalizar Cuestionario'}
             className='bg-cyan-800 md:w-1/3'
             onClick={() => {
+              window.scroll(0, 0);
               finished ? router.push('/home') : setFinished(true);
             }}
           ></Button>
@@ -86,7 +173,7 @@ export default function Questionnarie() {
   );
 }
 
-function FinishQuestionary({ qualification, data }: any) {
+function FinishQuestionary({ qualification, data, getQuestion }: any) {
   return (
     <section
       className={cn(
@@ -109,63 +196,10 @@ function FinishQuestionary({ qualification, data }: any) {
       <div className='w-5/6 md:w-3/4'>
         {data.questions.map((question: any, index: number) => (
           <React.Fragment key={index}>
-            {getQuestion(question, true)}
+            {getQuestion(question, index, true)}
           </React.Fragment>
         ))}
       </div>
     </section>
   );
 }
-
-const getQuestion = (question: any, answered: boolean = false) => {
-  const response = answered ? question.response : null;
-  // console.log(question.question, response)
-
-  switch (question.type) {
-    case QuestionTypes.LONG_ANSWER:
-      return (
-        <LongAnswerQuestion
-          onChange={() => {}}
-          question={question.question}
-          value=''
-          required={question.required}
-          answer={response != null ? 'Por reponder' : response}
-        ></LongAnswerQuestion>
-      );
-    case QuestionTypes.MULTIPLE_CHOICE:
-      return (
-        <MultipleChoiceQuestion
-          maxSelections={question.max}
-          minSelections={question.min}
-          onChange={() => {}}
-          required={question.required}
-          options={question.options}
-          question={question.question}
-          correctAnswers={response}
-        ></MultipleChoiceQuestion>
-      );
-    case QuestionTypes.SHORT_ANSWER:
-      return (
-        <ShortAnswerQuestion
-          onChange={() => {}}
-          question={question.question}
-          value=''
-          required={question.required}
-          answer={response}
-        ></ShortAnswerQuestion>
-      );
-
-    case QuestionTypes.TRUE_FALSE:
-      return (
-        <BooleanQuestion
-          onChange={() => {}}
-          question={question.question}
-          required={question.required}
-          correctAnswer={response}
-        ></BooleanQuestion>
-      );
-    default:
-      break;
-  }
-  return <>Tipo no reconocido</>;
-};

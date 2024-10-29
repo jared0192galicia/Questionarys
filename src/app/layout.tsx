@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 // import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/lara-light-cyan/theme.css'
-import './globals.css';
-
-
+import 'primeicons/primeicons.css';
+import './globals.css';        
 
 export const metadata: Metadata = {
   title: 'Encuestas - Login',

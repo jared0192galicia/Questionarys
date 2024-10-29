@@ -25,7 +25,7 @@ export default function Login() {
   const [form, setForm] = useState<Account>({});
   const [loadingLogin, setLoadingLogin] = useState<boolean>(false);
   const [loadingPost] = useState<boolean>(false);
-  const [showForgotPassword, setForgotPassword] = useState<boolean>(true);
+  const [showForgotPassword, setForgotPassword] = useState<boolean>(false);
 
   const toast = useRef<Toast>(null);
   const router = useRouter();
@@ -46,8 +46,13 @@ export default function Login() {
   const fetchLogin = () => {
     setLoadingLogin(true);
     setTimeout(() => {
+      
       if (user == 'frozono' && password == 'frio') {
+        router.push('/cuestionarios');
+
+      } else if (user == 'admin' && password == 'admin') {
         router.push('/home');
+      
       } else {
         setLoadingLogin(false);
         show(UIMessages.innvalidUser);
@@ -58,12 +63,13 @@ export default function Login() {
   return (
     <>
       <Toast ref={toast} />
-      {showForgotPassword && <ForgotPassword setVisible={setForgotPassword}/>}
+      {showForgotPassword && <ForgotPassword setVisible={setForgotPassword} />}
       <section
         className={cn(
           'w-screen md:h-[calc(100vh-135px)]',
           'bg-dirty-white font-jaldi font-light',
-          'flex justify-center items-center gap-10 flex-col md:flex-row', {'blur-sm': showForgotPassword}
+          'flex justify-center items-center gap-10 flex-col md:flex-row',
+          { 'blur-sm': showForgotPassword }
         )}
       >
         <section
@@ -79,6 +85,7 @@ export default function Login() {
               id='username'
               value={user}
               onChange={(e) => setUser(e.target.value)}
+              className='max-w-[248px]'
             />
             <label htmlFor='username'>Usuario</label>
           </FloatLabel>
