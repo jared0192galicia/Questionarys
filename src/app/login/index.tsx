@@ -11,7 +11,6 @@ import UIMessages from '@/models/messages';
 import ForgotPassword from '@/components/forgotPassword';
 import { locale, addLocale } from 'primereact/api';
 
-
 interface Account {
   firstName?: string;
   secondName?: string;
@@ -57,13 +56,10 @@ export default function Login() {
   const fetchLogin = () => {
     setLoadingLogin(true);
     setTimeout(() => {
-      
-      if (user == 'frozono' && password == 'frio') {
+      if (user == 'user' && password == 'user') {
         router.push('/cuestionarios');
-
       } else if (user == 'admin' && password == 'admin') {
         router.push('/home');
-      
       } else {
         setLoadingLogin(false);
         show(UIMessages.innvalidUser);

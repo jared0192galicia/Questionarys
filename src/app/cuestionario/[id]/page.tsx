@@ -181,7 +181,7 @@ function FinishQuestionary({ qualification, data, getQuestion }: any) {
         'flex flex-col items-center'
       )}
     >
-      <h2 className='text-3xl'>Obtiviste</h2>
+      <h2 className='text-3xl'>Obtuviste</h2>
 
       <Knob
         value={qualification}
