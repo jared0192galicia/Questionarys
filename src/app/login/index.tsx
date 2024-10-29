@@ -9,6 +9,8 @@ import { Toast } from 'primereact/toast';
 import { useRouter } from 'next/navigation';
 import UIMessages from '@/models/messages';
 import ForgotPassword from '@/components/forgotPassword';
+import { locale, addLocale } from 'primereact/api';
+
 
 interface Account {
   firstName?: string;
@@ -29,6 +31,15 @@ export default function Login() {
 
   const toast = useRef<Toast>(null);
   const router = useRouter();
+
+  addLocale('es', {
+    weak: 'Débil',
+    medium: 'Media',
+    strong: 'Fuerte',
+    passwordPrompt: 'Introduce una contraseña'
+  });
+
+  locale('es');
 
   /**
    * @function
@@ -57,7 +68,7 @@ export default function Login() {
         setLoadingLogin(false);
         show(UIMessages.innvalidUser);
       }
-    }, 3_000);
+    }, 2_000);
   };
 
   return (
@@ -66,7 +77,7 @@ export default function Login() {
       {showForgotPassword && <ForgotPassword setVisible={setForgotPassword} />}
       <section
         className={cn(
-          'w-screen md:h-[calc(100vh-135px)]',
+          'w-screen md:h-screen',
           'bg-dirty-white font-jaldi font-light',
           'flex justify-center items-center gap-10 flex-col md:flex-row',
           { 'blur-sm': showForgotPassword }

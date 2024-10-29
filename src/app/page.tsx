@@ -4,7 +4,7 @@ import Login from './login/index';
 export default function Home() {
   return (
       <section>
-        <Header></Header>
+        {/* <Header></Header> */}
         <Login></Login>
       </section>
   );

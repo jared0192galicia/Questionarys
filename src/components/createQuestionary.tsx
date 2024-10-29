@@ -33,13 +33,6 @@ export default function CreateQuestionary({ mode, visible, setVisible }: any) {
         <section
           className={cn('w-2/5', 'border border-solid border-cyan-800')}
         ></section>
-        <section
-          className={cn('w-2/5', 'border border-solid border-cyan-800')}
-        ></section>
-        <div className='w-20'></div>
-        <section
-          className={cn('w-2/5', 'border border-solid border-cyan-800')}
-        ></section>
       </div>
     </section>
   );
