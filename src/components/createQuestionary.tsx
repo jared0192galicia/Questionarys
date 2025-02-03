@@ -25,7 +25,8 @@ export default function CreateQuestionary({ mode, visible, setVisible }: any) {
     tittle: '',
     question: '',
     type: '',
-    questions: []
+    questions: [],
+    scope: { value: 'Público' }
   });
 
   addLocale('es', calendarEs);
@@ -157,9 +158,9 @@ export default function CreateQuestionary({ mode, visible, setVisible }: any) {
           </div>
         </section>
         <div className='h-96  border border-solid border-gray-300'></div>
-        <Additionals></Additionals>
+        <Additionals handleChange={handleChange} form={form}></Additionals>
         {/* <section className={cn('flex w-1/3 hfull bg-white')}></section> */}
-      {/* <Button label='Agregar' outlined /> */}
+        {/* <Button label='Agregar' outlined /> */}
       </div>
     </section>
   );

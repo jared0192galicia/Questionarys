@@ -8,8 +8,14 @@ import { Checkbox } from 'primereact/checkbox';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { FloatLabel } from 'primereact/floatlabel';
+import { SelectButton } from 'primereact/selectbutton';
+import { FileUpload } from 'primereact/fileupload';
+import { Toast } from 'primereact/toast';
 
-export default function Additionals() {
+export default function Additionals({ handleChange, form }: any) {
+  const [value, setValue] = useState(null);
+  const scopeOptions = [{ value: 'Público' }, { value: 'Privado' }];
+
   const editTemplate = () => {
     return (
       <div className='flex gap-2'>
@@ -53,7 +59,24 @@ export default function Additionals() {
           <label htmlFor='maxSelections'>Limite de intentos</label>
         </FloatLabel>
       </section>
-      <div className='py-12'></div>
+      <div className='card flex justify-content-center gap-4'>
+        <SelectButton
+          value={form.scope}
+          onChange={(e) => handleChange('scope', e.value)}
+          optionLabel='value'
+          options={scopeOptions}
+        />
+        <FileUpload
+          mode='basic'
+          chooseLabel='Imagen'
+          name='demo[]'
+          url='/api/upload'
+          accept='image/*'
+          maxFileSize={1000000}
+          // onUpload={onUpload}
+        />
+      </div>
+      <div className='py-4'></div>
       <h2 className=''>Gestion</h2>
       <DataTable
         emptyMessage='Sin preguntas'
