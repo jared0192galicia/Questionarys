@@ -12,6 +12,8 @@ import { Calendar } from 'primereact/calendar';
 import { addLocale } from 'primereact/api';
 import { calendarEs } from '@/models/constants';
 import { Button } from 'primereact/button';
+import SortAnsware from './create/shortAnsware';
+import useQuestionaryStore from '@/stores/questionary';
 
 interface params {
   mode: 1 | 2;
@@ -19,52 +21,43 @@ interface params {
 
 export default function CreateQuestionary({ visible, setVisible }: any) {
   // const [questions, setQuestions] = useState<any>({});
-  const [question, setQuestion] = useState<any>({question: ''});
-  const [form, setForm] = useState<any>({
-    id: 1,
-    required: false,
-    tittle: '',
+  const { questionary, handleQuestionary } = useQuestionaryStore();
+
+  const [question, setQuestion] = useState<any>({
     question: '',
     type: '',
-    questions: [],
-    scope: { value: 'Público' }
+    required: false,
+    ignoreCase: false
   });
 
   addLocale('es', calendarEs);
 
   useEffect(() => {
-    console.log(form);
-  }, [form]);
-
-  const handleChange = (key: string, value: any) => {
-    setForm((prev: any) => ({ ...prev, [key]: value }));
-  };
+    console.log(JSON.stringify(questionary, null, 2));
+  }, [questionary]);
 
   const handleChangeQuestion = (key: string, value: any) => {
     setQuestion((prev: any) => ({ ...prev, [key]: value }));
   };
 
-  // const handlePushOptions = (id: number, options: any) => {
-  //   const questions = form.questions;
-  //   questions.find((question: any, index: number) => index == id).options =
-  //     options;
-
-  //   handleChange('questions', questions);
-  // };
-
   const handlePushOptions = (options: any = null) => {
     if (!options) return;
 
-    setQuestion((prev: any) => ({...prev, ...options}));
-    // console.log('🚀 ~ question:', question);
+    setQuestion((prev: any) => ({ ...prev, ...options }));
+  };
 
+  const handleDateRangeChange = (dates: any) => {
+    if (!Array.isArray(dates) || dates.length === 0) return;
+
+    handleQuestionary('startDate', dates[0] ?? null);
+    handleQuestionary('limitDate', dates[1] ?? null);
   };
 
   const addQuestion = () => {
-    const questions = form.questions;
+    const questions = questionary.questions;
     questions.push(question);
-    handleChange('questions', questions);
-  }
+    handleQuestionary('questions', questions);
+  };
 
   return (
     <section
@@ -95,8 +88,8 @@ export default function CreateQuestionary({ visible, setVisible }: any) {
               <FloatLabel className='font-jaldi'>
                 <InputText
                   id='tittle'
-                  value={form.tittle}
-                  onChange={(e) => handleChange('tittle', e.target.value)}
+                  value={questionary.tittle}
+                  onChange={(e) => handleQuestionary('tittle', e.target.value)}
                   className='w-full'
                 />
                 <label htmlFor='tittle'>Titulo</label>
@@ -109,8 +102,13 @@ export default function CreateQuestionary({ visible, setVisible }: any) {
                   className='w-full'
                 /> */}
                 <Calendar
-                  value={form.date}
-                  onChange={(e) => handleChange('date', e.value)}
+                  value={
+                    questionary.startDate || questionary.limitDate
+                      ? [questionary.startDate, questionary.limitDate]
+                      : null
+                  }
+                  // value={tempStartDate}
+                  onChange={(e) => handleDateRangeChange(e.value)}
                   selectionMode='range'
                   locale='es'
                   readOnlyInput
@@ -122,8 +120,10 @@ export default function CreateQuestionary({ visible, setVisible }: any) {
             <FloatLabel className='font-jaldi'>
               <InputTextarea
                 id='description'
-                value={form.description}
-                onChange={(e) => handleChange('description', e.target.value)}
+                value={questionary.description}
+                onChange={(e) =>
+                  handleQuestionary('description', e.target.value)
+                }
                 className='w-full'
               />
               <label htmlFor='description'>Descripción</label>
@@ -153,8 +153,8 @@ export default function CreateQuestionary({ visible, setVisible }: any) {
                     'Corta',
                     'Multiple'
                   ]}
-                  value={form.type}
-                  onChange={(e) => handleChange('type', e.target.value)}
+                  value={question.type}
+                  onChange={(e) => handleChangeQuestion('type', e.target.value)}
                   className='w-[200px]'
                 />
                 <label htmlFor='type-question'>Tipo</label>
@@ -164,8 +164,10 @@ export default function CreateQuestionary({ visible, setVisible }: any) {
                   inputId='required'
                   name='pizza'
                   value='Obligatoria'
-                  onChange={(e) => handleChange('required', e.target.checked)}
-                  checked={form.required || false}
+                  onChange={(e) =>
+                    handleChangeQuestion('required', e.target.checked)
+                  }
+                  checked={question.required}
                 />
                 <label htmlFor='required' className='ml-2'>
                   Obligatoria
@@ -181,15 +183,26 @@ export default function CreateQuestionary({ visible, setVisible }: any) {
                 onClick={addQuestion}
               ></Button>
             </div>
-            {form.type == 'Multiple' ? (
+            {question.type == 'Multiple' ? (
               <MultipleForm onChange={handlePushOptions} id={1}></MultipleForm>
+            ) : (
+              <></>
+            )}
+            {question.type == 'Corta' ? (
+              <SortAnsware
+                handleChange={handleChangeQuestion}
+                question={question}
+              ></SortAnsware>
             ) : (
               <></>
             )}
           </div>
         </section>
         <div className='md:h-96 border border-solid border-gray-300'></div>
-        <Additionals handleChange={handleChange} form={form}></Additionals>
+        <Additionals
+          handleChange={handleQuestionary}
+          form={questionary}
+        ></Additionals>
         {/* <section className={cn('flex w-1/3 hfull bg-white')}></section> */}
         {/* <Button label='Agregar' outlined /> */}
       </div>
