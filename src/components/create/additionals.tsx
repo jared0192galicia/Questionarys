@@ -28,7 +28,7 @@ export default function Additionals({ handleChange, form }: any) {
   return (
     <section
       className={cn(
-        'space-y-4 font-jaldi h-[600px] w-2/6 rounded-md',
+        'space-y-4 font-jaldi h-[600px] md:w-2/6 rounded-md',
         'overflowy-scroll overflowx-hidden bg-white px-5'
       )}
     >

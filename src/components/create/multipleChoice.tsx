@@ -5,13 +5,17 @@ import { Tag } from 'primereact/tag';
 import { InputNumber } from 'primereact/inputnumber';
 import { FloatLabel } from 'primereact/floatlabel';
 
-export default function MultipleForm({handleChange, id} : any) {
+export default function MultipleForm({ onChange, id }: any) {
   const [options, setOptions] = useState<string[]>([]);
   const [newOption, setNewOption] = useState<string>('');
   const [maxSelections, setMaxSelections] = useState<number>(1);
 
   useEffect(() => {
-    // handleChange(id, options);
+    const question = {
+      options,
+      maxSelections
+    };
+    onChange(question);
   }, [options]);
 
   const addOption = () => {
@@ -42,9 +46,8 @@ export default function MultipleForm({handleChange, id} : any) {
       setOptions(updatedOptions);
     }
   };
-
   return (
-    <section className='space-y-4 p4 font-jaldi h-[250px] overflow-y-scroll overflow-x-hidden'>
+    <section className='space-y-4 p-4 font-jaldi h-[210px] overflow-y-scroll overflow-x-hidden w-full md:w-auto'>
       <div className='flex items-center gap-2'>
         <InputText
           value={newOption}
@@ -88,7 +91,9 @@ export default function MultipleForm({handleChange, id} : any) {
           </div>
         ))}
       </div>
+
       <div className='p-1'></div>
+
       <FloatLabel className='font-jaldi'>
         <InputNumber
           id='maxSelections'
@@ -99,7 +104,7 @@ export default function MultipleForm({handleChange, id} : any) {
           showButtons
           className='w-20'
         />
-        <label htmlFor='type-question'>Opciones seleccionables</label>
+        <label htmlFor='maxSelections'>Opciones seleccionables</label>
       </FloatLabel>
     </section>
   );

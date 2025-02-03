@@ -17,8 +17,9 @@ interface params {
   mode: 1 | 2;
 }
 
-export default function CreateQuestionary({ mode, visible, setVisible }: any) {
-  const [questions, setQuestions] = useState<any>({});
+export default function CreateQuestionary({ visible, setVisible }: any) {
+  // const [questions, setQuestions] = useState<any>({});
+  const [question, setQuestion] = useState<any>({question: ''});
   const [form, setForm] = useState<any>({
     id: 1,
     required: false,
@@ -39,12 +40,31 @@ export default function CreateQuestionary({ mode, visible, setVisible }: any) {
     setForm((prev: any) => ({ ...prev, [key]: value }));
   };
 
-  const handlePushOptions = (id: number, options: any) => {
-    const questions = form.questions;
-    questions.find((question: any, index: number) => index == id).options = options;
-
-    handleChange('questions', questions);
+  const handleChangeQuestion = (key: string, value: any) => {
+    setQuestion((prev: any) => ({ ...prev, [key]: value }));
   };
+
+  // const handlePushOptions = (id: number, options: any) => {
+  //   const questions = form.questions;
+  //   questions.find((question: any, index: number) => index == id).options =
+  //     options;
+
+  //   handleChange('questions', questions);
+  // };
+
+  const handlePushOptions = (options: any = null) => {
+    if (!options) return;
+
+    setQuestion((prev: any) => ({...prev, ...options}));
+    // console.log('🚀 ~ question:', question);
+
+  };
+
+  const addQuestion = () => {
+    const questions = form.questions;
+    questions.push(question);
+    handleChange('questions', questions);
+  }
 
   return (
     <section
@@ -66,8 +86,8 @@ export default function CreateQuestionary({ mode, visible, setVisible }: any) {
         <IoMdClose />
       </button>
       <h1 className='w-1/3 text-center'>Crea un cuestionario</h1>
-      <div className='flex justify-around w-screen'>
-        <section className={cn('flex w-1/3 h-full bg-white flex-col p-5')}>
+      <div className='flex flex-col md:flex-row md:justify-around w-screen bg-dirty-white'>
+        <section className={cn('flex md:w-1/3 bg-white flex-col p-5 mb-5')}>
           {/* Formulario general */}
           <div>
             <h2>General</h2>
@@ -115,8 +135,10 @@ export default function CreateQuestionary({ mode, visible, setVisible }: any) {
             <FloatLabel className='font-jaldi'>
               <InputText
                 id='question'
-                value={form.question}
-                onChange={(e) => handleChange('question', e.target.value)}
+                value={question.question}
+                onChange={(e) =>
+                  handleChangeQuestion('question', e.target.value)
+                }
                 className='w-full'
               />
               <label htmlFor='question'>Pregunta</label>
@@ -149,6 +171,15 @@ export default function CreateQuestionary({ mode, visible, setVisible }: any) {
                   Obligatoria
                 </label>
               </div>
+              <Button
+                icon='pi pi-plus-circle'
+                raised
+                outlined
+                text
+                className='rounded-full bg-green-700 text-white'
+                tooltip='Agregar Pregunta'
+                onClick={addQuestion}
+              ></Button>
             </div>
             {form.type == 'Multiple' ? (
               <MultipleForm onChange={handlePushOptions} id={1}></MultipleForm>
@@ -157,7 +188,7 @@ export default function CreateQuestionary({ mode, visible, setVisible }: any) {
             )}
           </div>
         </section>
-        <div className='h-96  border border-solid border-gray-300'></div>
+        <div className='md:h-96 border border-solid border-gray-300'></div>
         <Additionals handleChange={handleChange} form={form}></Additionals>
         {/* <section className={cn('flex w-1/3 hfull bg-white')}></section> */}
         {/* <Button label='Agregar' outlined /> */}
