@@ -71,7 +71,9 @@ export default function HomeAdmin() {
             'text-2xl text-center cursor-pointer',
             'hover:animate-pulse'
           )}
-          onClick={()=> {router.push('home')}}
+          onClick={()=> {
+            router.push('/administracion/cuentas');
+          }}
         >
           <PiFilesFill className='text-3xl' />
           Crear <br /> Cuenta

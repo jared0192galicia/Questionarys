@@ -57,6 +57,12 @@ export default function CreateQuestionary({ visible, setVisible }: any) {
     const questions = questionary.questions;
     questions.push(question);
     handleQuestionary('questions', questions);
+    setQuestion({
+      question: '',
+      type: '',
+      required: false,
+      ignoreCase: false
+    });
   };
 
   return (
@@ -130,6 +136,7 @@ export default function CreateQuestionary({ visible, setVisible }: any) {
             </FloatLabel>
           </div>
           {/* Formulario de preguntas */}
+          <div className='w-full border border-solid border-gray-200 mt-9 border-b-0'></div>
           <div>
             <h2>Preguntas</h2>
             <FloatLabel className='font-jaldi'>
@@ -200,8 +207,8 @@ export default function CreateQuestionary({ visible, setVisible }: any) {
         </section>
         <div className='md:h-96 border border-solid border-gray-300'></div>
         <Additionals
-          handleChange={handleQuestionary}
-          form={questionary}
+          // handleChange={handleQuestionary}
+          // form={questionary}
         ></Additionals>
         {/* <section className={cn('flex w-1/3 hfull bg-white')}></section> */}
         {/* <Button label='Agregar' outlined /> */}

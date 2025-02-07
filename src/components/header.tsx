@@ -37,7 +37,7 @@ export default function Header() {
         <button
           className='border-none bg-white cursor-pointer'
           onClick={() => {
-            router.back;
+            history.back();
           }}
         >
           {/* <p className='textlg pr5 m-0'>Jared Galicia</p> */}

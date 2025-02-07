@@ -65,6 +65,15 @@ export default function Cuestionarios() {
           // onClick={confirm}
           outlined
         />
+        <Button
+          label='Respuestas'
+          icon='pi pi-eye'
+          severity='warning'
+          size='small'
+          // disabled={!selected}
+          // onClick={userModify}
+          outlined
+        />
       </div>
     );
   };

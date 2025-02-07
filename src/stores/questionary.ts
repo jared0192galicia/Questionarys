@@ -22,6 +22,8 @@ type Questionary = {
   public: boolean;
   questions: Question[];
   endMessage: string;
+  attempts: number;
+  isAnonymous: boolean;
 };
 
 type QuestionaryStore = {
@@ -42,7 +44,9 @@ const useQuestionaryStore = create<QuestionaryStore>((set) => ({
     limitDate: null,
     public: true,
     questions: [],
-    endMessage: ''
+    endMessage: '',
+    attempts: 1,
+    isAnonymous: false
   },
 
   handleQuestionary: (key, value) =>
